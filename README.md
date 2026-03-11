@@ -1,2 +1,2 @@
 # Kanban-Board
-Simple kanban board.
+Kanban board is a dynamic task management application designed to apply basic front-end knowledge acquired through bootcamp certification. Built with a focus on a data-driven UI, the entire board is rendered from an array of objects, using drag&drop event listeners. I am actively working on a UI overhaul to provide a more polished, modern user experience. Final state of the project aims to integrate MongoDB to create a full CRUD app.
