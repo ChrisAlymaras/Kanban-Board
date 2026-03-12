@@ -34,24 +34,64 @@ let tasks = [task1,task2,task3,task4,task5];
 //task column initialize
 let column = document.getElementById("to-do");
 
-//create a div consisting of the task name and a button
+//create card header-body-footer
 for (let i=0; i<tasks.length; i++){
 
-  //set task name and classes
-  const task = document.createElement("div");
-  task.innerHTML = tasks[i].name;
-  task.classList.add("item");
-  task.draggable = true;
+  const taskCard = document.createElement("div");
+  taskCard.classList.add("card-container");
+  taskCard.draggable = true;
 
-  //set button for every task
-  const btn = document.createElement("button");
-  btn.classList.add("task-button");
-  btn.innerHTML = "Details";
+  const taskHeader = createHeader(i);
+  const taskBody = createBody(i);
+  const taskFooter = createFooter(i);
 
-  //append button to div
-  task.appendChild(btn);
-  //append whole div to-do container
-  column.appendChild(task);
+
+  taskCard.appendChild(taskHeader);
+  taskCard.appendChild(taskBody);
+  taskCard.appendChild(taskFooter);
+  column.appendChild(taskCard);
+}
+
+function createHeader(index) {
+    const taskHeader = document.createElement("div");
+    taskHeader.classList.add("task-header");
+
+    const headerBtn = document.createElement("button");
+    headerBtn.classList.add("task-button");
+    headerBtn.innerHTML = "Details";
+
+    const header = document.createElement("h2");
+    header.innerHTML = tasks[index].name;
+
+    taskHeader.appendChild(header);
+    taskHeader.appendChild(headerBtn);
+
+    return taskHeader;
+}
+
+function createBody(index) {
+    const taskBody = document.createElement("div");
+    taskBody.classList.add("task-body");
+
+    const taskDuration = document.createElement("span");
+    taskDuration.innerHTML = tasks[index].duration;
+    const taskDifficulty = document.createElement("span");
+    taskDifficulty.innerHTML = tasks[index].difficulty;
+
+    taskBody.appendChild(taskDuration);
+    taskBody.appendChild(taskDifficulty);
+
+    return taskBody;
+}
+
+function createFooter(index) {
+    const taskFooter = document.createElement("div");
+    taskFooter.classList.add("task-footer");
+
+    const taskNotes = document.createElement("small");
+    taskNotes.innerHTML = `Notes: ${tasks[index].notes}`;
+    taskFooter.appendChild(taskNotes);
+    return taskFooter;
 }
 
 const showDetails = document.querySelector(".info-container");
@@ -92,7 +132,7 @@ function clearDetails(){
 let dragged;
 
 //select items and zones
-document.querySelectorAll(".item").forEach(setEveryElement);
+document.querySelectorAll(".card-container").forEach(setEveryElement);
 document.querySelectorAll(".dropzone").forEach(setEveryZone);
 
 function setEveryElement(item) {
