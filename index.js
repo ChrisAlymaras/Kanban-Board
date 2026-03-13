@@ -7,7 +7,7 @@ let task1 = {
 let task2 = {
   name: "Lunch",
   duration: "0h-30min",
-  difficulty: 1,
+  difficulty: 2,
   notes:""
 }
 let task3 = {
@@ -25,7 +25,7 @@ let task4 = {
 let task5 = {
   name: "Football Match",
   duration: "1h-20min",
-  difficulty: 1,
+  difficulty: 3,
   notes:"Show up 15minutes earlier"
 }
 
@@ -75,12 +75,22 @@ function createBody(index) {
 
     const taskDuration = document.createElement("span");
     taskDuration.innerHTML = tasks[index].duration;
-    const taskDifficulty = document.createElement("span");
-    taskDifficulty.innerHTML = tasks[index].difficulty;
+
+    const taskDifficulty = document.createElement("div");
+    taskDifficulty.innerHTML = "Difficulty: ";
+    //transform difficulty into stars
+    for(let i=0; i<5; i++){
+        const star = document.createElement("span");
+        star.classList.add("fa");
+        star.classList.add("fa-star");
+        if(i<tasks[index].difficulty){
+            star.classList.add("checked")
+        }
+        taskDifficulty.appendChild(star);
+    }
 
     taskBody.appendChild(taskDuration);
     taskBody.appendChild(taskDifficulty);
-
     return taskBody;
 }
 

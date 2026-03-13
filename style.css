@@ -6,34 +6,53 @@ body{
   justify-content: center;
   flex-direction: column;
 }
+.column-headers h2{
+    border:2px solid grey;
+    border-radius:10px;
+    padding: 10px 20px;
+    margin:20px 60px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
-.headers{
-  display:flex;
-  justify-content: space-between;
-  margin:0 20px;
+.column-headers{
+  display: flex;
+    justify-content: center;
 }
 
 .columns{
   display:flex;
-  justify-content: space-between;
+    justify-content: center;
+  align-items: center;
 }
 
 .main-container #to-do,
 .main-container #in-progress,
 .main-container #done{
   display:flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
   flex-direction: column;
-
-  border: 2px solid black;
   border-radius:10px;
 
   margin: 0 10px;
   width:300px;
   height:50vh;
     overflow-y: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
+.main-container #done{
+    background-color: rgba(0, 190, 0, 0.3);
+    border: 2px solid green;
+}
+
+.main-container #in-progress{
+    background-color: rgba(255, 203, 34, 0.3);
+    border: 2px solid orange;
+}
+
+.main-container #to-do{
+    background-color: rgba(255, 99, 71, 0.3);
+    border: 2px solid red;
 }
 
 .card-container{
@@ -55,7 +74,7 @@ body{
 }
 
 .card-container:hover{
-    background-color: #8a817c;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 
@@ -64,14 +83,23 @@ body{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin:30px 0;
+    margin:30px 0;
+
+    border-radius: 10px;
+    background-color: lightgrey;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .task-button{
-  border:2px solid #c1121f;
-  background-color: #fdf0d5;
+  border:2px solid #dda15e;
+  background-color: #fefae0;
   margin: 10px;
   border-radius:10px;
   padding:5px;
+    font-weight:600;
+}
+
+.checked{
+    color:orange;
 }
 
