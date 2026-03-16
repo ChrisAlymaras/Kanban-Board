@@ -8,7 +8,7 @@ let task2 = {
   name: "Lunch",
   duration: "0h-30min",
   difficulty: 2,
-  notes:""
+  notes:"Have a small meal then a bigger one"
 }
 let task3 = {
   name: "Studying",
@@ -52,6 +52,17 @@ for (let i=0; i<tasks.length; i++){
   column.appendChild(taskCard);
 }
 
+//set listener for the collapsible form when entering new task
+const newTaskBtn = document.querySelector(".collapsible");
+newTaskBtn.addEventListener("click", function() {
+    const content = this.nextElementSibling;
+    if (content.style.display === "none"){
+        content.style.display = "block";
+    } else {
+        content.style.display = "none";
+    }
+});
+
 function createHeader(index) {
     const taskHeader = document.createElement("div");
     taskHeader.classList.add("task-header");
@@ -76,22 +87,27 @@ function createBody(index) {
     const taskDuration = document.createElement("span");
     taskDuration.innerHTML = tasks[index].duration;
 
-    const taskDifficulty = document.createElement("div");
-    taskDifficulty.innerHTML = "Difficulty: ";
-    //transform difficulty into stars
-    for(let i=0; i<5; i++){
-        const star = document.createElement("span");
-        star.classList.add("fa");
-        star.classList.add("fa-star");
-        if(i<tasks[index].difficulty){
-            star.classList.add("checked")
-        }
-        taskDifficulty.appendChild(star);
-    }
+    //set difficulty and transform its number into stars
+    const taskDifficulty = createStars(index);
 
     taskBody.appendChild(taskDuration);
     taskBody.appendChild(taskDifficulty);
     return taskBody;
+}
+
+function createStars(index){
+    const taskDifficulty = document.createElement("div");
+    taskDifficulty.innerHTML = "Difficulty: ";
+    for(let i=0; i<5; i++) {
+        const star = document.createElement("span");
+        star.classList.add("fa");
+        star.classList.add("fa-star");
+        if (i < tasks[index].difficulty) {
+            star.classList.add("checked")
+        }
+        taskDifficulty.appendChild(star);
+    }
+    return taskDifficulty;
 }
 
 function createFooter(index) {
@@ -114,22 +130,30 @@ for (let i=0; i<allButtons.length; i++) {
 function expandDetails(i){
   clearDetails();
   //set up body for showing task details
-  const header = document.createElement("h1");
+    const detailsHeader = document.createElement("div");
+    detailsHeader.classList.add("details-header");
+
+    const header = document.createElement("span");
   header.innerHTML = tasks[i].name;
+  detailsHeader.appendChild(header);
 
-  const duration = document.createElement("h2");
-  duration.innerHTML = `Duration : ${tasks[i].duration}`;
+  const durationContainer = document.createElement("div");
+  durationContainer.classList.add("duration-header");
+  const clockIcon = document.createElement("i");
+  clockIcon.classList.add("fa");
+  clockIcon.classList.add("fa-clock-o");
+  clockIcon.innerHTML = ` ${tasks[i].duration}`;
+    detailsHeader.appendChild(clockIcon);
 
-  const difficulty = document.createElement("h3");
-  difficulty.innerHTML = `Difficulty : ${tasks[i].difficulty}`;
+    const taskDifficulty = createStars(i);
+    detailsHeader.appendChild(taskDifficulty);
 
-  const notes = document.createElement("h4");
+  const notes = document.createElement("p");
   notes.innerHTML = `Notes : ${tasks[i].notes}`;
 
+
   //append to info-container
-  showDetails.appendChild(header);
-  showDetails.appendChild(duration);
-  showDetails.appendChild(difficulty);
+  showDetails.appendChild(detailsHeader);
   showDetails.appendChild(notes);
 }
 
