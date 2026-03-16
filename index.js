@@ -1,42 +1,46 @@
 let task1 = {
   name: "Workout",
-  duration: "2h-0min",
+  duration: "2H-0M",
   difficulty: 1,
-  notes:"Bag,Shoes,Shorts,Glasses"
+  notes:"Bag,Shoes,Shorts,Glasses."
 }
 let task2 = {
   name: "Lunch",
-  duration: "0h-30min",
+  duration: "0H-30M",
   difficulty: 2,
-  notes:"Have a small meal then a bigger one"
+  notes:"Have a small meal then a bigger one."
 }
 let task3 = {
   name: "Studying",
-  duration: "3h-30min",
+  duration: "3H-30M",
   difficulty: 4,
-  notes:"Deliver Java project until the end of the month"
+  notes:"Deliver Java project until the end of the month."
 }
 let task4 = {
   name: "Build New PC",
-  duration: "5h",
+  duration: "5H",
   difficulty: 5,
-  notes:"Be careful with the smaller case"
+  notes:"Be careful with the smaller case."
 }
 let task5 = {
   name: "Football Match",
-  duration: "1h-20min",
+  duration: "1H-20M",
   difficulty: 3,
-  notes:"Show up 15minutes earlier"
+  notes:"Show up 15minutes earlier."
 }
 
 let tasks = [task1,task2,task3,task4,task5];
+localStorage.setItem("tasks", JSON.stringify(tasks));
 
 //task column initialize
 let column = document.getElementById("to-do");
 
 //create card header-body-footer
-for (let i=0; i<tasks.length; i++){
+for (let i=0; i<tasks.length; i++) {
+    createCard(i);
+}
 
+function createCard(i){
   const taskCard = document.createElement("div");
   taskCard.classList.add("card-container");
   taskCard.draggable = true;
@@ -133,10 +137,12 @@ function expandDetails(i){
     const detailsHeader = document.createElement("div");
     detailsHeader.classList.add("details-header");
 
+    //task title
     const header = document.createElement("span");
   header.innerHTML = tasks[i].name;
   detailsHeader.appendChild(header);
 
+  //duration with clock icon
   const durationContainer = document.createElement("div");
   durationContainer.classList.add("duration-header");
   const clockIcon = document.createElement("i");
@@ -145,21 +151,74 @@ function expandDetails(i){
   clockIcon.innerHTML = ` ${tasks[i].duration}`;
     detailsHeader.appendChild(clockIcon);
 
+    //difficulty
     const taskDifficulty = createStars(i);
     detailsHeader.appendChild(taskDifficulty);
 
+    //notes
   const notes = document.createElement("p");
   notes.innerHTML = `Notes : ${tasks[i].notes}`;
 
+  //create an input for extra notes
+    const form = document.createElement("form");
+    form.classList.add("notes-form");
+    form.addEventListener("submit", (event) => saveNotes(event,i));
+
+    const input = document.createElement("input");
+  input.setAttribute("type","text");
+  input.setAttribute("id","newNotes");
+  input.setAttribute("name","newNotes");
+  const button  = document.createElement("button");
+  button.setAttribute("type","submit");
+  button.innerHTML = "Save";
+  //append input and button
+  form.appendChild(input);
+  form.appendChild(button);
 
   //append to info-container
   showDetails.appendChild(detailsHeader);
   showDetails.appendChild(notes);
+  showDetails.appendChild(form);
+}
+
+function saveNotes(event,i){
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    const newNote = data.get("newNotes");
+    if (newNote.trim()) {
+        tasks[i].notes += " " + newNote+".";
+    }
+    event.target.reset();
 }
 
 //clear details in order to show another
 function clearDetails(){
   showDetails.innerHTML = "";
+}
+
+//handle submit when a new task is added
+const taskForm = document.querySelector(".task-form");
+taskForm.addEventListener("submit",()=>handleSubmit);
+
+function handleSubmit(event){
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    const title = data.title;
+    const hours = data.hours;
+    const minutes = data.minutes;
+    const difficulty = data.difficulty;
+    const notes = data.notes;
+
+    const newTask = {
+        "name": title,
+        "duration": `${hours}H-${minutes}M`,
+        "difficulty": difficulty,
+        "notes": notes
+    }
+    tasks.push(newTask);
+    createCard(tasks.length-1);
 }
 
 //set up event listeners for drag and drop functionality

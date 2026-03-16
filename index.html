@@ -15,7 +15,16 @@
 <div class="new-task-container">
     <button class="collapsible">Create new task</button>
     <div class="content">
-    <p>This will be the form</p>
+      <form class="task-form">
+        <input type="text" placeholder="Task title" name="title" id="title" />
+        <div class="numbers-zone">
+          <input type="number" placeholder="Hours approx" name="hours" id="hours" min="1" max="24"/>
+          <input type="number" placeholder="Minutes approx" name="minutes" id="minutes" min="1" max="60"/>
+          <input type="number" placeholder="Difficulty" name="difficulty" id="difficulty" min="1" max="5" />
+        </div>
+        <input type="text" placeholder="Notes" name="notes" id="notes" />
+        <button type="submit">Submit</button>
+      </form>
   </div>
 </div>
 <div class="main-container">
