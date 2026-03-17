@@ -1,21 +1,29 @@
 body{
   font-family: Trebuchet MS, Verdana, sans-serif ;
 }
+
+.collapsible {
+    background-color: #3f37c9;
+    width:100%;
+    color: white;
+    padding: 12px;
+    border: none;
+    margin-top:15px;
+    font-size: 16px;
+}
+
 .collapsible:hover{
     background-color: orange;
 }
 
-.form-content{
+.task-form{
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    max-width: 60%;
     width: 100%;
 }
 
-
-
-.form-content input{
+.task-form input{
     margin:5px;
     padding: 10px;
     border:2px solid black;
@@ -24,18 +32,11 @@ body{
 
 .numbers-zone input{
     border:1px solid orange;
-    width:25%;
+    width:20%;
 }
 
-
-.collapsible {
-    background-color: #3f37c9;
-    color: white;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    margin-top:15px;
+.fa-plus{
+    padding-left: 10px;
     font-size: 16px;
 }
 
@@ -108,7 +109,7 @@ body{
     border-radius: 10px;
 }
 
-.task-button{
+button{
     border:2px solid #dda15e;
     background-color: #fefae0;
     margin: 10px;

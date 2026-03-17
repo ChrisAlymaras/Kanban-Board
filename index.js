@@ -30,10 +30,11 @@ let task5 = {
 }
 
 let tasks = [task1,task2,task3,task4,task5];
+//store tasks in local storage, maybe later on we pull data from there
 localStorage.setItem("tasks", JSON.stringify(tasks));
 
 //task column initialize
-let column = document.getElementById("to-do");
+const column = document.getElementById("to-do");
 
 //create card header-body-footer
 for (let i=0; i<tasks.length; i++) {
@@ -56,23 +57,13 @@ function createCard(i){
   column.appendChild(taskCard);
 }
 
-//set listener for the collapsible form when entering new task
-const newTaskBtn = document.querySelector(".collapsible");
-newTaskBtn.addEventListener("click", function() {
-    const content = this.nextElementSibling;
-    if (content.style.display === "none"){
-        content.style.display = "block";
-    } else {
-        content.style.display = "none";
-    }
-});
-
 function createHeader(index) {
     const taskHeader = document.createElement("div");
     taskHeader.classList.add("task-header");
 
     const headerBtn = document.createElement("button");
     headerBtn.classList.add("task-button");
+    headerBtn.addEventListener("click",()=>expandDetails(index));
     headerBtn.innerHTML = "Details";
 
     const header = document.createElement("h2");
@@ -124,12 +115,8 @@ function createFooter(index) {
     return taskFooter;
 }
 
+//build info container to show details of selected task
 const showDetails = document.querySelector(".info-container");
-const allButtons = document.querySelectorAll(".task-button");
-
-for (let i=0; i<allButtons.length; i++) {
-  allButtons[i].addEventListener("click",()=>expandDetails(i));
-}
 
 function expandDetails(i){
   clearDetails();
@@ -181,6 +168,7 @@ function expandDetails(i){
   showDetails.appendChild(form);
 }
 
+//when a task is expanded and user enters new details, store them
 function saveNotes(event,i){
     event.preventDefault();
     const data = new FormData(event.target);
@@ -192,24 +180,24 @@ function saveNotes(event,i){
     event.target.reset();
 }
 
-//clear details in order to show another
+//clear details so as not to have conflicts with the next task called
 function clearDetails(){
   showDetails.innerHTML = "";
 }
 
 //handle submit when a new task is added
 const taskForm = document.querySelector(".task-form");
-taskForm.addEventListener("submit",()=>handleSubmit);
+taskForm.addEventListener("submit",(event)=>handleSubmit(event));
 
 function handleSubmit(event){
     event.preventDefault();
     const data = new FormData(event.target);
 
-    const title = data.title;
-    const hours = data.hours;
-    const minutes = data.minutes;
-    const difficulty = data.difficulty;
-    const notes = data.notes;
+    const title = data.get("title");
+    const hours = data.get("hours");
+    const minutes = data.get("minutes");
+    const difficulty = data.get("difficulty");
+    const notes = data.get("notes");
 
     const newTask = {
         "name": title,
@@ -217,8 +205,30 @@ function handleSubmit(event){
         "difficulty": difficulty,
         "notes": notes
     }
+    tasks = JSON.parse(localStorage.getItem("tasks"));
     tasks.push(newTask);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    console.log(tasks);
+    //create new task and append to to-do column
     createCard(tasks.length-1);
+    updateChanges();
+}
+
+//set listener for the collapsible form when entering new task
+const newTaskBtn = document.querySelector(".collapsible");
+newTaskBtn.addEventListener("click", function() {
+    const content = this.nextElementSibling;
+    if (content.style.display === "none"){
+        content.style.display = "block";
+    } else {
+        content.style.display = "none";
+    }
+});
+
+function updateChanges(){
+    document.querySelectorAll(".card-container").forEach(setEveryElement);
+    document.querySelectorAll(".dropzone").forEach(setEveryZone);
+    taskForm.clear();
 }
 
 //set up event listeners for drag and drop functionality
@@ -286,58 +296,6 @@ function addItem(zone){
     event.target.appendChild(dragged);
   })
 }
-
-//drag and drop one thing !!
-
-// source.addEventListener("drag",(event)=>{
-//   console.log("dragging");
-// });
-//
-// //when start dragging append "dragging" class and log it
-// source.addEventListener("dragstart",(event)=>{
-//   dragged=event.target;
-//   console.log(dragged);
-//   event.target.classList.add("dragging");
-// });
-//
-// //when leave element, exclude class "dragging"
-// source.addEventListener("dragend",(event)=>{
-//   //reset the transparency
-//   event.target.classList.remove("dragging");
-// });
-//
-//add listeners for destination zone
-// let target = document.querySelector(".dropzone");
-//
-// //make container/target open for a drop
-// target.addEventListener("dragover",(event)=>{
-//   //prevent default to allow item drop
-//   event.preventDefault();
-// });
-
-
-// target.addEventListener("dragenter",(event)=>{
-//   if(event.target.classList.contains("dropzone")){
-//     event.target.classList.add("dragover");
-//     console.log(target);
-//   }
-// });
-//
-// target.addEventListener("dragleave",(event)=>{
-//   if(event.target.classList.contains("dropzone")){
-//     event.target.classList.remove("dragover");
-//   }
-// })
-//
-//
-// //append child to proper container
-// target.addEventListener("drop",(event)=>{
-//   event.preventDefault();
-//   if (event.target.classList.contains("dropzone")){
-//     event.target.classList.remove("dragover");
-//     event.target.appendChild(dragged);
-//   }
-// });
 
 
 

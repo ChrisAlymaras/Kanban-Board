@@ -12,22 +12,23 @@
 </head>
 
 <body>
-<div class="new-task-container">
-    <button class="collapsible">Create new task</button>
+
+<div class="main-container">
+  <div class="new-task-container">
+    <button class="collapsible">Create new task<i class="fa fa-plus"></i></button>
     <div class="content">
       <form class="task-form">
-        <input type="text" placeholder="Task title" name="title" id="title" />
+        <input type="text" placeholder="Task title" name="title" id="title" required/>
         <div class="numbers-zone">
-          <input type="number" placeholder="Hours approx" name="hours" id="hours" min="1" max="24"/>
-          <input type="number" placeholder="Minutes approx" name="minutes" id="minutes" min="1" max="60"/>
-          <input type="number" placeholder="Difficulty" name="difficulty" id="difficulty" min="1" max="5" />
+          <input type="number" placeholder="Hours approx" name="hours" id="hours" min="1" max="24" required/>
+          <input type="number" placeholder="Minutes approx" name="minutes" id="minutes" min="1" max="60" required/>
+          <input type="number" placeholder="Difficulty" name="difficulty" id="difficulty" min="1" max="5" required/>
         </div>
-        <input type="text" placeholder="Notes" name="notes" id="notes" />
+        <input type="text" placeholder="Notes" name="notes" id="notes" required/>
         <button type="submit">Submit</button>
       </form>
+    </div>
   </div>
-</div>
-<div class="main-container">
   <div class="column-headers">
     <h2>To-Do</h2>
     <h2>In Progress</h2>
